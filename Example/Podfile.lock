@@ -1,0 +1,19 @@
+PODS:
+  - DirectoryUploader (1.0.0):
+    - iMonitorMyFiles
+  - iMonitorMyFiles (0.1.0)
+
+DEPENDENCIES:
+  - DirectoryUploader (from `..`)
+
+EXTERNAL SOURCES:
+  DirectoryUploader:
+    :path: ..
+
+SPEC CHECKSUMS:
+  DirectoryUploader: 2b3169a86888af385d9ad74c35beefc6ed618872
+  iMonitorMyFiles: 1d17367af6dd83f0042f10683eb508904645242b
+
+PODFILE CHECKSUM: 1364f20fb22ed109bf9a8cf7dd843e821116e6b4
+
+COCOAPODS: 1.1.1

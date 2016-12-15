@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Uploader" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-LH-Rpc">
+                                <rect key="frame" x="133" y="28" width="108" height="30"/>
+                                <state key="normal" title="Create New File"/>
+                                <connections>
+                                    <action selector="createNewFile" destination="BYZ-38-t0r" eventType="touchUpInside" id="X4i-nv-UsW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhW-z7-0AO">
+                                <rect key="frame" x="137" y="66" width="100" height="30"/>
+                                <state key="normal" title="Delete Old File"/>
+                                <connections>
+                                    <action selector="deleteOldFile" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mav-p5-XFZ"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="File list" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YlL-JI-RXF">
+                                <rect key="frame" x="16" y="104" width="343" height="543"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JKe-LH-Rpc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="6bt-kP-1z3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YlL-JI-RXF" secondAttribute="trailing" id="7LQ-SA-Xgf"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="YlL-JI-RXF" secondAttribute="leading" id="Ds0-un-34h"/>
+                            <constraint firstItem="YlL-JI-RXF" firstAttribute="top" secondItem="AhW-z7-0AO" secondAttribute="bottom" constant="8" id="Sn6-fW-iFv"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YlL-JI-RXF" secondAttribute="bottom" constant="20" id="fpc-G0-uvh"/>
+                            <constraint firstItem="JKe-LH-Rpc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fsR-EE-0GM"/>
+                            <constraint firstItem="AhW-z7-0AO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gCA-zT-UMF"/>
+                            <constraint firstItem="AhW-z7-0AO" firstAttribute="top" secondItem="JKe-LH-Rpc" secondAttribute="bottom" constant="8" id="nlR-Q1-rtg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="filesTextView" destination="YlL-JI-RXF" id="9rG-UH-8Je"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+        </scene>
+    </scenes>
+</document>
