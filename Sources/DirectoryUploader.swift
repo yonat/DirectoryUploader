@@ -49,7 +49,8 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
             urlSession = URLSession(configuration: .background(withIdentifier: "DirectoryUploader"), delegate: self, delegateQueue: nil)
         }
         guard let urlSession = urlSession else {return}
-        let urlRequest = URLRequest(url: targetURL)
+        var urlRequest = URLRequest(url: targetURL)
+        urlRequest.httpMethod = "PUT"
         for targetFile in targetFiles {
             let uploadTask = urlSession.uploadTask(with: urlRequest, fromFile: targetFile)
             uploadTask.taskDescription = targetFile.lastPathComponent
@@ -61,7 +62,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
 
     open func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         // upload completed - delete file
-        if let fileName = task.taskDescription {
+        if nil == error, let fileName = task.taskDescription {
             try? FileManager.default.removeItem(at: sourceDirectory.appendingPathComponent(fileName))
         }
     }
