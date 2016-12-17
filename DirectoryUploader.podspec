@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DirectoryUploader"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "Automatically upload all files saved in source directory, and then delete the uploaded files."
 
   s.description  = <<-DESC

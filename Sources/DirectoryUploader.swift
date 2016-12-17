@@ -52,6 +52,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
         var urlRequest = URLRequest(url: targetURL)
         urlRequest.httpMethod = "PUT"
         for targetFile in targetFiles {
+            guard FileManager.default.isReadableFile(atPath: targetFile.path) else {continue}
             let uploadTask = urlSession.uploadTask(with: urlRequest, fromFile: targetFile)
             uploadTask.taskDescription = targetFile.lastPathComponent
             uploadTask.resume()
