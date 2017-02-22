@@ -11,9 +11,10 @@ import iMonitorMyFiles
 
 open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDelegate
 {
-    public init(sourceDirectory: URL, targetURL: URL) {
+    public init(sourceDirectory: URL, targetURL: URL, filenameParameterName: String? = nil) {
         self.sourceDirectory = sourceDirectory
         self.targetURL = targetURL
+        self.filenameParameterName = filenameParameterName
         fileMonitor = TABFileMonitor(url: sourceDirectory)
         super.init()
         fileMonitor.delegate = self
@@ -35,6 +36,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
 
     open let sourceDirectory: URL
     open let targetURL: URL
+    open let filenameParameterName: String?
     public private(set) var urlSession: URLSession?
     private var fileMonitor: TABFileMonitor
 
@@ -49,12 +51,13 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
             urlSession = URLSession(configuration: .background(withIdentifier: "DirectoryUploader"), delegate: self, delegateQueue: nil)
         }
         guard let urlSession = urlSession else {return}
-        var urlRequest = URLRequest(url: targetURL)
-        urlRequest.httpMethod = "PUT"
         for targetFile in targetFiles {
+            let filename = targetFile.lastPathComponent
+            var urlRequest = URLRequest(url: targetURL.appendingQueryItem(name: filenameParameterName, value: filename))
+            urlRequest.httpMethod = "PUT"
             guard FileManager.default.isReadableFile(atPath: targetFile.path) else {continue}
             let uploadTask = urlSession.uploadTask(with: urlRequest, fromFile: targetFile)
-            uploadTask.taskDescription = targetFile.lastPathComponent
+            uploadTask.taskDescription = filename
             uploadTask.resume()
         }
     }
@@ -72,5 +75,17 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
 
     open func fileMonitor(_ fileMonitor: TABFileMonitor!, didSee changeType: TABFileMonitorChangeType) {
         upload()
+    }
+}
+
+extension URL {
+    func appendingQueryItem(name: String?, value: String?) -> URL {
+        guard let name = name else {return self}
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {return self}
+        let item = URLQueryItem(name: name, value: value)
+        var queryItems = components.queryItems ?? []
+        queryItems.append(item)
+        components.queryItems = queryItems
+        return components.url ?? self
     }
 }

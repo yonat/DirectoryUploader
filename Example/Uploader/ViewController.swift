@@ -37,7 +37,7 @@ class ViewController: UIViewController {
 
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateFiles), userInfo: nil, repeats: true).fire()
 
-        uploader = DirectoryUploader(sourceDirectory: targetDirectory!, targetURL: URL(string: "http://www.mocky.io/v2/5185415ba171ea3a00704eed")!)
+        uploader = DirectoryUploader(sourceDirectory: targetDirectory!, targetURL: URL(string: "http://rest.everythingposture.com/file/add")!, filenameParameterName: "name")
     }
 
     // MARK: - Actions
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
             print("nil targetDirectory")
             return
         }
-        let fileURL = targetDirectory.appendingPathComponent("file-\(fileIndex)-is-here.\(fileExtension)", isDirectory: false)
+        let fileURL = targetDirectory.appendingPathComponent("file’s-\(fileIndex)-is-here.\(fileExtension)", isDirectory: false)
         fileIndex += 1
         do {
             try "Lorem Ipsum".write(to: fileURL, atomically: false, encoding: .unicode)
