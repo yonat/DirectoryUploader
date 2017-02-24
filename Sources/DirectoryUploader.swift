@@ -80,9 +80,9 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
 
 extension URL {
     func appendingQueryItem(name: String?, value: String?) -> URL {
-        guard let name = name else {return self}
+        guard let name = name?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return self}
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {return self}
-        let item = URLQueryItem(name: name, value: value)
+        let item = URLQueryItem(name: name, value: value?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
         var queryItems = components.queryItems ?? []
         queryItems.append(item)
         components.queryItems = queryItems
