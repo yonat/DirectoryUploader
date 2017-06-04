@@ -31,4 +31,5 @@ let uploader = DirectoryUploader(sourceDirectory: docDir, targetURL: endpointURL
   s.source_files  = "Sources/*.swift"
 
   s.dependency 'iMonitorMyFiles'
+  s.dependency 'York-Swift-Try-Catch'
 end

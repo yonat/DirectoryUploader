@@ -1,7 +1,9 @@
 PODS:
-  - DirectoryUploader (1.0.0):
+  - DirectoryUploader (1.1.2):
     - iMonitorMyFiles
+    - York-Swift-Try-Catch
   - iMonitorMyFiles (0.1.0)
+  - York-Swift-Try-Catch (0.1.1)
 
 DEPENDENCIES:
   - DirectoryUploader (from `..`)
@@ -11,9 +13,10 @@ EXTERNAL SOURCES:
     :path: ..
 
 SPEC CHECKSUMS:
-  DirectoryUploader: 2b3169a86888af385d9ad74c35beefc6ed618872
+  DirectoryUploader: 0056fba524dec925004921da677b0d3765e4e069
   iMonitorMyFiles: 1d17367af6dd83f0042f10683eb508904645242b
+  York-Swift-Try-Catch: ac0d410504c56c181ee40404e95ea835a817e7b6
 
 PODFILE CHECKSUM: 1364f20fb22ed109bf9a8cf7dd843e821116e6b4
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1
