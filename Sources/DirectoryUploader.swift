@@ -56,9 +56,12 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
             var urlRequest = URLRequest(url: targetURL.appendingQueryItem(name: filenameParameterName, value: filename))
             urlRequest.httpMethod = "PUT"
             guard FileManager.default.isReadableFile(atPath: targetFile.path) else {continue}
-            let uploadTask = urlSession.uploadTask(with: urlRequest, fromFile: targetFile)
-            uploadTask.taskDescription = filename
-            uploadTask.resume()
+            do { // because still getting sometimes "Cannot read file at" error
+                let uploadTask = try urlSession.uploadTask(with: urlRequest, fromFile: targetFile)
+                uploadTask.taskDescription = filename
+                try uploadTask.resume()
+            }
+            catch {}
         }
     }
 
