@@ -22,7 +22,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
     }
 
     /// automatically called when a new file is added to sourceDirectory, BUT you may want to call upload() from applicationDidBecomeActive(_:)
-    open func upload() { // call on app did become active, did finish launching, etc
+    @objc open func upload() { // call on app did become active, did finish launching, etc
         if let urlSession = urlSession {
             urlSession.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
                 if nil == uploadTasks.first {$0.state == .running} {
@@ -35,10 +35,10 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
         }
     }
 
-    open let sourceDirectory: URL
-    open let targetURL: URL
-    open let filenameParameterName: String?
-    public private(set) var urlSession: URLSession?
+    @objc open let sourceDirectory: URL
+    @objc open let targetURL: URL
+    @objc open let filenameParameterName: String?
+    @objc public private(set) var urlSession: URLSession?
     private var fileMonitor: TABFileMonitor
 
     private func uploadAllFiles() {
@@ -69,7 +69,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
 
     // MARK: - URLSessionTaskDelegate
 
-    open func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    @objc open func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         // upload completed - delete file
         if nil == error, let fileName = task.taskDescription {
             try? FileManager.default.removeItem(at: sourceDirectory.appendingPathComponent(fileName))
@@ -78,7 +78,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
 
     // MARK: - TABFileMonitorDelegate
 
-    open func fileMonitor(_ fileMonitor: TABFileMonitor!, didSee changeType: TABFileMonitorChangeType) {
+    @objc open func fileMonitor(_ fileMonitor: TABFileMonitor!, didSee changeType: TABFileMonitorChangeType) {
         upload()
     }
 }

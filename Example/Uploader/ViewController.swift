@@ -69,7 +69,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func updateFiles() {
+    @objc func updateFiles() {
         guard let targetDirectory = targetDirectory else {
             print("nil targetDirectory")
             return
