@@ -6,15 +6,14 @@
 //  Copyright © 2016 Yonat Sharon. All rights reserved.
 //
 
-import UIKit
 import DirectoryUploader
+import UIKit
 
 class ViewController: UIViewController {
-
     let subpath = "Test"
     let fileExtension = "abc"
 
-    @IBOutlet weak var filesTextView: UITextView!
+    @IBOutlet var filesTextView: UITextView!
 
     var fileIndex = 0
     var targetDirectory: URL?
@@ -27,17 +26,20 @@ class ViewController: UIViewController {
 
         do {
             let documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let targetDirectory = documentsDirectory.appendingPathComponent(subpath,  isDirectory: true)
+            let targetDirectory = documentsDirectory.appendingPathComponent(subpath, isDirectory: true)
             self.targetDirectory = targetDirectory
             try FileManager.default.createDirectory(at: targetDirectory, withIntermediateDirectories: true)
-        }
-        catch {
+        } catch {
             print("Error creating targetDirectory at \(subpath): \(error)")
         }
 
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateFiles), userInfo: nil, repeats: true).fire()
 
-        uploader = DirectoryUploader(sourceDirectory: targetDirectory!, targetURL: URL(string: "http://rest.everythingposture.com/file/add")!, filenameParameterName: "name")
+        uploader = DirectoryUploader(
+            sourceDirectory: targetDirectory!,
+            targetURL: URL(string: "http://rest.everythingposture.com/file/add")!,
+            filenameParameterName: "name"
+        )
     }
 
     // MARK: - Actions
@@ -51,21 +53,18 @@ class ViewController: UIViewController {
         fileIndex += 1
         do {
             try "Lorem Ipsum".write(to: fileURL, atomically: false, encoding: .unicode)
-        }
-        catch {
+        } catch {
             print("Error writing to \(fileURL): \(error)")
         }
     }
 
     @IBAction func deleteOldFile() {
+        guard let firstFile = files.first else { return }
         do {
-            if let firstFile = files.first {
-                try FileManager.default.removeItem(at: firstFile)
-                files.removeFirst()
-            }
-        }
-        catch {
-            print("Error deleting \(files.first!): \(error)")
+            try FileManager.default.removeItem(at: firstFile)
+            files.removeFirst()
+        } catch {
+            print("Error deleting \(firstFile): \(error)")
         }
     }
 
@@ -76,16 +75,15 @@ class ViewController: UIViewController {
         }
         do {
             files = try FileManager.default.contentsOfDirectory(at: targetDirectory, includingPropertiesForKeys: nil, options: [])
-        }
-        catch {
+        } catch {
             print("Error getting contentsOfDirectory: \(error)")
         }
-        filesTextView.text = files.map {$0.lastPathComponent} .joined(separator: "\n")
+        filesTextView.text = files.map { $0.lastPathComponent }.joined(separator: "\n")
 
         // update fileIndex
         if let lastFileName = files.last?.lastPathComponent {
             if let numberRange = lastFileName.range(of: "\\d", options: .regularExpression), !numberRange.isEmpty {
-                let numberInFileName = lastFileName.substring(with: numberRange)
+                let numberInFileName = lastFileName[numberRange]
                 if let lastFileIndex = Int(numberInFileName), lastFileIndex >= fileIndex {
                     fileIndex = lastFileIndex + 1
                 }

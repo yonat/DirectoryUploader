@@ -10,8 +10,7 @@ import Foundation
 import iMonitorMyFiles
 import York_Swift_Try_Catch
 
-open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDelegate
-{
+open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDelegate {
     public init(sourceDirectory: URL, targetURL: URL, filenameParameterName: String? = nil) {
         self.sourceDirectory = sourceDirectory
         self.targetURL = targetURL
@@ -24,13 +23,12 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
     /// automatically called when a new file is added to sourceDirectory, BUT you may want to call upload() from applicationDidBecomeActive(_:)
     @objc open func upload() { // call on app did become active, did finish launching, etc
         if let urlSession = urlSession {
-            urlSession.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
-                if nil == uploadTasks.first {$0.state == .running} {
+            urlSession.getTasksWithCompletionHandler { _, uploadTasks, _ in
+                if nil == uploadTasks.first { $0.state == .running } {
                     self.uploadAllFiles()
                 }
             }
-        }
-        else {
+        } else {
             uploadAllFiles()
         }
     }
@@ -42,7 +40,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
     private var fileMonitor: TABFileMonitor
 
     private func uploadAllFiles() {
-        guard let targetFiles = try? FileManager.default.contentsOfDirectory(at: sourceDirectory, includingPropertiesForKeys: nil, options: []) else {return}
+        guard let targetFiles = try? FileManager.default.contentsOfDirectory(at: sourceDirectory, includingPropertiesForKeys: nil) else { return }
         guard targetFiles.count > 0 else {
             urlSession?.invalidateAndCancel()
             urlSession = nil
@@ -51,17 +49,17 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
         if nil == urlSession {
             urlSession = URLSession(configuration: .background(withIdentifier: "DirectoryUploader"), delegate: self, delegateQueue: nil)
         }
-        guard let urlSession = urlSession else {return}
+        guard let urlSession = urlSession else { return }
         for targetFile in targetFiles {
             let filename = targetFile.lastPathComponent
             var urlRequest = URLRequest(url: targetURL.appendingQueryItem(name: filenameParameterName, value: filename))
             urlRequest.httpMethod = "PUT"
-            guard FileManager.default.isReadableFile(atPath: targetFile.path) else {continue}
+            guard FileManager.default.isReadableFile(atPath: targetFile.path) else { continue }
             TryCatchFinally.handleTry({ // because still getting sometimes "Cannot read file at" error
                 let uploadTask = urlSession.uploadTask(with: urlRequest, fromFile: targetFile)
                 uploadTask.taskDescription = filename
                 uploadTask.resume()
-            }, withCatch: { (exception) in
+            }, withCatch: { exception in
                 print("Error uploading \(filename): \(exception?.reason ?? "Unknown")")
             })
         }
@@ -85,8 +83,8 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
 
 extension URL {
     func appendingQueryItem(name: String?, value: String?) -> URL {
-        guard let name = name?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return self}
-        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {return self}
+        guard let name = name?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return self }
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         let item = URLQueryItem(name: name, value: value?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
         var queryItems = components.queryItems ?? []
         queryItems.append(item)
