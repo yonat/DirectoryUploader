@@ -23,7 +23,7 @@ let uploader = DirectoryUploader(sourceDirectory: docDir, targetURL: endpointURL
   s.author             = { "Yonat Sharon" => "yonat@ootips.org" }
   s.social_media_url   = "http://twitter.com/yonatsharon"
 
-  s.swift_version = '3.0'
+  s.swift_version = '4.2'
   s.platform     = :ios, "8.0"
   s.requires_arc = true
 
