@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DirectoryUploader"
-  s.version      = "1.2.1"
+  s.version      = "1.3.0"
   s.summary      = "Automatically upload all files saved in source directory, and then delete the uploaded files."
 
   s.description  = <<-DESC
@@ -23,7 +23,7 @@ let uploader = DirectoryUploader(sourceDirectory: docDir, targetURL: endpointURL
   s.author             = { "Yonat Sharon" => "yonat@ootips.org" }
   s.social_media_url   = "http://twitter.com/yonatsharon"
 
-  s.swift_versions = ['4.2', 5.0']
+  s.swift_versions = ['4.2', '5.0']
   s.platform     = :ios, "8.0"
   s.requires_arc = true
 
