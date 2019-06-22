@@ -8,11 +8,6 @@ Monitors a directory and automatically detects new files added to it. Uploads al
 [![Platform](https://img.shields.io/cocoapods/p/DirectoryUploader.svg?style=flat)](http://cocoapods.org/pods/DirectoryUploader)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-## Requirements
-
-- iOS 8.0+
-- Xcode 7.3
-
 ## Installation
 
 ### CocoaPods:
@@ -38,7 +33,7 @@ let uploader = DirectoryUploader(sourceDirectory: docDir, targetURL: endpointURL
 
 [https://github.com/yonat/DirectoryUploader](https://github.com/yonat/DirectoryUploader)
 
-[swift-image]:https://img.shields.io/badge/swift-3.0-orange.svg
+[swift-image]:https://img.shields.io/badge/swift-5.0-orange.svg
 [swift-url]: https://swift.org/
 [license-image]: https://img.shields.io/badge/License-MIT-blue.svg
 [license-url]: LICENSE.txt

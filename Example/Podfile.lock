@@ -1,22 +1,45 @@
 PODS:
-  - DirectoryUploader (1.1.2):
+  - DirectoryUploader (1.2.1):
     - iMonitorMyFiles
     - York-Swift-Try-Catch
   - iMonitorMyFiles (0.1.0)
+  - SwiftFormat/CLI (0.40.9)
+  - SwiftLint (0.33.0)
+  - SwiftQuality (1.0.2):
+    - SwiftFormat/CLI (= 0.40.9)
+    - SwiftLint (= 0.33.0)
   - York-Swift-Try-Catch (0.1.1)
 
 DEPENDENCIES:
   - DirectoryUploader (from `..`)
+  - SwiftQuality (from `https://github.com/yonat/SwiftQuality`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - iMonitorMyFiles
+    - SwiftFormat
+    - SwiftLint
+    - York-Swift-Try-Catch
 
 EXTERNAL SOURCES:
   DirectoryUploader:
-    :path: ..
+    :path: ".."
+  SwiftQuality:
+    :git: https://github.com/yonat/SwiftQuality
+
+CHECKOUT OPTIONS:
+  SwiftQuality:
+    :commit: d56816af9d75882d222965c0bee01f5ca410f3e0
+    :git: https://github.com/yonat/SwiftQuality
 
 SPEC CHECKSUMS:
-  DirectoryUploader: 0056fba524dec925004921da677b0d3765e4e069
+  DirectoryUploader: 60aa3db807f135926b4843b60c97c39e097dcbd4
   iMonitorMyFiles: 1d17367af6dd83f0042f10683eb508904645242b
+  SwiftFormat: 6b67b6e7fe73d664f0cbb4f13721f130462c86a5
+  SwiftLint: fed9c66336e41fc74dc48a73678380718f0c8b0e
+  SwiftQuality: 9dddd6752df12ae7ed3b1eed24b6fc42d75724cf
   York-Swift-Try-Catch: ac0d410504c56c181ee40404e95ea835a817e7b6
 
-PODFILE CHECKSUM: 1364f20fb22ed109bf9a8cf7dd843e821116e6b4
+PODFILE CHECKSUM: 7b7d0d17e54edf203f91d54cda1cb96dc880a363
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.7.2

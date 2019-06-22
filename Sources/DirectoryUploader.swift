@@ -24,7 +24,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
     @objc open func upload() { // call on app did become active, did finish launching, etc
         if let urlSession = urlSession {
             urlSession.getTasksWithCompletionHandler { _, uploadTasks, _ in
-                if nil == uploadTasks.first { $0.state == .running } {
+                if nil == uploadTasks.first(where: { $0.state == .running }) {
                     self.uploadAllFiles()
                 }
             }
@@ -33,15 +33,15 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
         }
     }
 
-    @objc open let sourceDirectory: URL
-    @objc open let targetURL: URL
-    @objc open let filenameParameterName: String?
+    @objc public let sourceDirectory: URL
+    @objc public let targetURL: URL
+    @objc public let filenameParameterName: String?
     @objc public private(set) var urlSession: URLSession?
     private var fileMonitor: TABFileMonitor
 
     private func uploadAllFiles() {
         guard let targetFiles = try? FileManager.default.contentsOfDirectory(at: sourceDirectory, includingPropertiesForKeys: nil) else { return }
-        guard targetFiles.count > 0 else {
+        guard !targetFiles.isEmpty else {
             urlSession?.invalidateAndCancel()
             urlSession = nil
             return
