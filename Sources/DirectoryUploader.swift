@@ -22,6 +22,7 @@ open class DirectoryUploader: NSObject, TABFileMonitorDelegate, URLSessionTaskDe
 
     /// automatically called when a new file is added to sourceDirectory, BUT you may want to call upload() from applicationDidBecomeActive(_:)
     @objc open func upload() { // call on app did become active, did finish launching, etc
+        guard UIApplication.shared.applicationState == .active else { return }
         if let urlSession = urlSession {
             urlSession.getTasksWithCompletionHandler { _, uploadTasks, _ in
                 if nil == uploadTasks.first(where: { $0.state == .running }) {
